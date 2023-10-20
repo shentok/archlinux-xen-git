@@ -1,0 +1,11 @@
+--- xen/tools/firmware/hvmloader/pci.c	2023-09-16 22:39:50.940127320 +0200
++++ xen/tools/firmware/hvmloader/pci.c	2023-09-16 22:54:44.530085072 +0200
+@@ -161,7 +161,7 @@
+             continue;
+ 
+         ASSERT((devfn != PCI_ISA_DEVFN) ||
+-               ((vendor_id == 0x8086) && (device_id == 0x7000)));
++               ((vendor_id == 0x8086) && ((device_id == 0x7000) || (device_id == 0x7110))));
+ 
+         switch ( class )
+         {

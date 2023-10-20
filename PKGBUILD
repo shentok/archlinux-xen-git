@@ -30,9 +30,9 @@ _common_make_flags=(
 
 pkgbase=xen
 pkgname=("xen" "xen-docs")
-pkgver=4.17.2pre
+pkgver=4.17.3pre
 _branch="stable-4.17"
-pkgrel=2
+pkgrel=1
 pkgdesc='Open-source type-1 or baremetal hypervisor - stable branch'
 arch=('x86_64')
 url='https://xenproject.org/'
@@ -54,6 +54,7 @@ optdepends=(
 
 _source=(
 	"git+https://xenbits.xen.org/git-http/xen.git#branch=${_branch}"
+	"piix4.patch"
 	"efi-xen.cfg"
 	"xen.conf"
 	"tmpfiles.conf"
@@ -87,6 +88,7 @@ _stubdom_source=(
 # from cheap hack known as break_out_sums.sh
 _sha512sums=(
 	"SKIP"
+	"7fad69b74eb0ba9751c3bad1c413c94c26477620390757b646e3db53386e6daa6fceeb07f57b75b10ab65de2495ec5676b142efb5c94eae436cb92a59e56cc74" # piix4.patch
 	"1bbcbcd9fb8344a207409ec9f0064a45b726416f043f902ca587f5e4fa58497a759be4ffd584fa32318e960aa478864cc05ec026c444e8d27ca8e3248bd67420" # efi-xen.cfg
 	"ccaa2ff82e4203b11e5dec9aeccac2e165721d8067e0094603ecaa7a70b78c9eb9e2287a32687883d26b6ceae6f8d2ad7636ddf949eb658637b3ceaa6999711b" # xen.conf
 	"53ba61587cc2e84044e935531ed161e22c36d9e90b43cab7b8e63bcc531deeefacca301b5dff39ce89210f06f1d1e4f4f5cf49d658ed5d9038c707e3c95c66ef" # tmpfiles.conf
@@ -162,6 +164,8 @@ prepare() {
 
 
 	fi
+
+	patch -p1 < "../piix4.patch"
 
 	for patchurl in "${_patches[@]}"; do
 		patch=$(basename $patchurl)
